@@ -1,7 +1,9 @@
 ---
 extends: default
 
-ignore-from-file: [.gitignore]
+ignore:
+  - .gitignore
+  - .github/workflows/
 
 rules:
   comments:
