@@ -1,0 +1,40 @@
+# File: .github/workflows/lint-markdown.yml
+---
+
+name: Shared Lint Markdown Workflow
+
+on: # yamllint disable-line rule:truthy
+  workflow_call:
+    inputs:
+      markdown_globs:
+        required: false
+        type: string
+        default: "**/*.md"
+    secrets:
+      # Optional: define if you want to allow secrets to be passed in
+      GH_TOKEN:
+        required: false
+
+jobs:
+  lint-markdown:
+    name: Lint Markdown
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4  # Checkout the calling repo
+
+      - name: Checkout shared-workflows config
+        uses: actions/checkout@v4
+        with:
+          repository: apaivinen/shared-workflows
+          path: shared
+          sparse-checkout: |
+            .markdownlint.yaml
+
+      - name: Copy markdownlint config
+        run: cp shared/.markdownlint.yaml .
+
+      - name: Lint Markdown
+        uses: DavidAnson/markdownlint-cli2-action@v19
+        with:
+          config: .markdownlint.yaml
+          globs: ${{ inputs.markdown_globs }}
