@@ -1,0 +1,16 @@
+{
+  "name": "Pre-commit Linting Dev Container",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "postCreateCommand": "pre-commit install",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "davidanson.vscode-markdownlint",
+        "redhat.vscode-yaml"
+      ]
+    }
+  }
+}
